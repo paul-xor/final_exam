@@ -10,6 +10,16 @@
   </head>
 
   <body>
+    <header>
+      <nav>
+
+        <%= link_to("Home", root_path) %>
+        |
+        <%= link_to ('Auctions') %>
+      </nav>
+    </header>
+
+
     <%= yield %>
   </body>
 </html>
