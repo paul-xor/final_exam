@@ -16,6 +16,8 @@ class BidsController < ApplicationController
     end
 
     def destroy
+        @bid.destroy
+        redirect_to auction_path(@bid.auction)
     end
 
     private
@@ -24,6 +26,6 @@ class BidsController < ApplicationController
     end
 
     def find_bid
-        @bid = Answer.bid(params[:id])
+        @bid = Bid.find(params[:id])
     end
 end
