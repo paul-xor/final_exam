@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to 'Edit', edit_auction_path(@auction) %> |
+<%= link_to 'Back', auctions_path %>
+
 <p>
   <strong>Title:</strong>
   <%= @auction.title %>
@@ -20,5 +23,40 @@
   <%= @auction.price %>
 </p>
 
-<%= link_to 'Edit', edit_auction_path(@auction) %> |
-<%= link_to 'Back', auctions_path %>
+<h2>Bids:</h2>
+
+<%= form_with(model: [@auction, @bid], local: true) do |f| %>
+  <% if @bid.errors.present? %>
+    <p class="form-errors">
+      <%= @bid.errors.full_messages.join(", ") %>
+    </p>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :bid_price %>
+    <br>
+    <%= f.text_field :bid_price %>
+  </div>
+
+  <%= f.submit "bid" %>
+<% end %>
+
+<ul class="bid-list">
+  <% @bids.each do |bid| %>
+    <li>
+      <p>
+        <%= bid.bid_price %> <br>
+        <small>
+          <%= link_to(
+            "Delete",
+            auction_bid_path(@auction.id, bid.id),
+            method: :delete,
+            data: { confirm: "Are you sure?" }
+          ) %>
+        </small>
+        •
+        <small>Bided <%= time_ago_in_words(bid.created_at) %> ago</small>
+      </p>
+    </li>
+  <% end %>
+</ul>
