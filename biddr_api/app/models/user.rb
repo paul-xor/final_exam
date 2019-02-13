@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-    
+    has_many :auctions, dependent: :nullify
+    has_many :bids, dependent: :nullify
+
     before_save { self.email = email.downcase }
     
     validates :username, presence: true, uniqueness: { case_sensitive: false }, 
@@ -10,5 +12,5 @@ class User < ApplicationRecord
     uniqueness: { case_sensitive: false }, 
     format: { with: VALID_EMAIL_REGEX}
 
-    
+
 end
